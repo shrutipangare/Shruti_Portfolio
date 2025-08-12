@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plug-N-Play Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --accent: #38bdf8;
+      --light: #f3f4f6;
+      --muted: #9ca3af;
+      --gradient: linear-gradient(135deg, #38bdf8, #818cf8);
+    }
+
+    [data-theme="light"] {
+      --bg: #f9fafb;
+      --accent: #3b82f6;
+      --light: #111827;
+      --muted: #6b7280;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--light);
+      scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
+    }
+
+    canvas#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 3rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .typed {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 600;
+      min-height: 1.5rem;
+    }
+
+    .contact-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      z-index: 1000;
+    }
+
+    .contact-item {
+      width: 40px;
+      height: 40px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] .contact-item {
+      background: #ffffff;
+      color: #1a1a1a;
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-item:hover {
+      background: #333333;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="light"] .contact-item:hover {
+      background: #f5f5f5;
+    }
+
+    .contact-item svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .about p, .now p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .experience {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .experience-timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .experience-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(56, 189, 248, 0.2));
+    }
+
+    .experience-item {
+      position: relative;
+      margin: 0 0 3rem 0;
+      padding-left: 120px;
+      background: rgba(31, 41, 55, 0.8);
+      border-radius: 12px;
+      padding: 2rem 2rem 2rem 120px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="light"] .experience-item {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .experience-item:hover {
+      transform: translateX(10px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
+    }
+
+    .experience-icon {
+      position: absolute;
+      left: 35px;
+      top: 2rem;
+      width: 30px;
+      height: 30px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      z-index: 2;
+    }
+
+    .experience-date {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .experience-title {
+      color: var(--light);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .experience-role {
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .experience-details {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .experience-gpa {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    .experience-coursework {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(56, 189, 248, 0.2);
+    }
+    
+
+    @media (max-width: 768px) {
+      .experience-timeline::before {
+        left: 25px;
+      }
+      
+      .experience-item {
+        padding-left: 80px;
+        margin-left: 0;
+      }
+      
+      .experience-icon {
+        left: 10px;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+      }
+    }
+    [data-theme="light"] {
+      --bg: #f9fafb;
+      --accent: #3b82f6;
+      --light: #111827;
+      --muted: #6b7280;
+    }
+    .sub-experience {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #4a90e2;
+  }
+
+  .sub-experience-date {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+
+  .sub-experience-role {
+    color: #4a90e2;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  
+  .sub-experience-details {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .sub-experience-title {
+      color: var(--light);
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 3px;
+    }
+
+    .coursework-label {
+    font-weight: 600;
+    color: var(--light);
+    margin-bottom: 5px;
+  }
+
+  .courses-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .course-item {
+    background: #4a90e2;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .courses-list {
+    color: #555;
+    line-height: 1.4;
+  }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .project {
+      background: #1f2937;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    [data-theme="light"] .project {
+      background: #e5e7eb;
+    }
+
+    .project:hover {
+      transform: translateY(-10px);
+    }
+
+    .project h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .project p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .project-buttons {
+      margin-top: 1rem;
+    }
+
+    .project-buttons span {
+      display: inline-block;
+      margin-right: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--gradient);
+      color: #fff;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .technologies ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .technologies li {
+      background: var(--gradient);
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .scroll-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      z-index: 1000;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .toggle-theme {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <button class="toggle-theme">Toggle Theme</button>
+  <button class="scroll-to-top" id="scrollToTop">↑ Top</button>
+  <section class="hero">
+    <h1>Shruti Pangare</h1>
+    <div class="typed" id="typed"></div>
+    <div class="contact-bar">
+      <a href="https://github.com/shrutipangare" class="contact-item" target="_blank" rel="noopener" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/shruti-pangare/" class="contact-item" target="_blank" rel="noopener" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="mailto:shruti.pangare@nyu.edu" class="contact-item" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.006c.434 0 .854.178 1.153.49L12 14.184 21.205 4.311a1.63 1.63 0 0 1 1.153-.49h.006c.904 0 1.636.732 1.636 1.636z"/></svg>
+      </a>
+      <a href=" " class="contact-item" title="Resume">
+        <svg viewBox="0 0 24 24">
+            <path d="M14,2L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4A2,2 0 0,1 6,2H14M18,20V9H13V4H6V20H18M7,11H17V13H7V11M7,15H17V17H7V15M7,7H10V9H7V7Z"/>
+        </svg>
+    </a>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>About Me</h2>
+    <p>
+      I'm a passionate AI/ML Engineer and Computer Engineering graduate student at NYU, dedicated to building intelligent systems that solve real-world problems. With 2+ years of industry experience and expertise in high-performance computing, I specialize in deep learning optimization, transformer architectures, GPU acceleration with CUDA, and scalable cloud deployments using PyTorch, TensorFlow, and AWS.  Whether it's fine-tuning large models or deploying research-backed applications, I focus on combining practical execution with deep technical knowledge. </p>
+  </section>
+
+  <section class="now">
+    <h2>Now</h2>
+    <p>
+      Right now, working as an AI/ML Software Engineering Intern at NYU Langone Health, I'm developing machine learning algorithms for medication titration to assist primary care physicians in optimizing patient treatment protocols. 
+    </p>
+  </section>
+
+  <section class="experience">
+    <h2>Education & Experience</h2>
+    
+   <div class="experience-timeline">
+      <div class="experience-item">
+        <div class="experience-icon">💼</div>
+        <div class="experience-date">May 2025 - Aug 2025</div>
+        <div class="experience-title">NYU Langone Health - HiBRID Lab</div>
+        <div class="experience-role">SWE(AI/ML) - Digital Health Intern</div>
+        <div class="experience-details"> </div>
+      </div>
+
+      <!---<div class="experience-item">
+        <div class="experience-icon"></div>
+        <div class="experience-date"> April 2025 - July 2025</div>
+        <div class="experience-title">NYU Stern School of Business</div>
+        <div class="experience-role">Graduate Teaching Fellow</div>
+        <div class="experience-details">Databases for Business Analytics</div>
+      </div>---> 
+
+      <div class="experience-item">
+        <div class="experience-icon">🎓</div>
+        <div class="experience-date">Aug 2024 - May 2026</div>
+        <div class="experience-title">New York University</div>
+        <div class="experience-role">M.S. Computer Engineering</div>
+        <div class="experience-gpa">GPA: 3.8/4.0</div>
+
+        <div class="experience-coursework">
+          <div class="coursework-label">Coursework:</div>
+          <div class="courses-grid">
+            <span class="course-item">Machine Learning</span>
+            <span class="course-item">Deep Learning</span>
+            <span class="course-item">High Performance Machine Learning</span>
+            <span class="course-item">Computer Vision</span>
+            <span class="course-item">Big Data</span>
+            <span class="course-item">Data Science & AI for Business: Managerial</span>
+            <span class="course-item">Computer Systems Architecture</span>
+            <span class="course-item">Real-time Embedded Systems</span>
+            <span class="course-item">ML for Cybersecurity</span>
+            <div class="sub-experience">
+              <div class="sub-experience-date">April 2025 - July 2025</div>
+              <div class="sub-experience-title">NYU Stern School of Business</div>
+              <div class="sub-experience-role">📄 Graduate Teaching Fellow- Databases for Business Analytics</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-icon">💼</div>
+        <div class="experience-date">Sept 2022 - Aug 2024</div>
+        <div class="experience-title">Capgemini Technology Services, India </div>
+        <div class="experience-role">Analyst</div>
+        <div class="courses-grid">
+          <span class="course-item">Python</span>
+          <span class="course-item">SQL</span>
+          <span class="course-item">Apache Spark</span>
+          <span class="course-item">Statistical Modelling</span>
+          <span class="course-item">Snowflake</span>
+          <span class="course-item">Causal Inference</span>
+          <span class="course-item">PowerBI</span>
+        <div class="experience-details"></div>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-icon">🧠</div>
+        <div class="experience-date">Jun 2021 - Jan 2022</div>
+        <div class="experience-title">iNeuron.Ai </div>
+        <div class="experience-role">Data Science Intern</div>
+        <div class="courses-grid">
+          <span class="course-item">Python</span>
+          <span class="course-item">Machine Learning</span>
+        <div class="experience-details"></div>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="experience-icon">🎓</div>
+        <div class="experience-date">Aug 2018 - May 2022</div>
+        <div class="experience-title">Savitribai Phule Pune University</div>
+        <div class="experience-role">B.E. Computer Engineering</div>
+        <div class="experience-gpa">GPA: 9.09/10</div>
+        <div class="sub-experience">
+          <div class="sub-experience-date">Jan 2021 - Jun 2021</div>
+          <div class="sub-experience-role">📄 Research Assistant - Big Data</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+
+  <section class="technologies">
+    <h2>Technologies I Use</h2>
+    <ul>
+      <li>Python</li>
+      <li>Pandas</li>
+      <li>Numpy</li>
+      <li>Matplotlib</li>
+      <li>Scikit-learn</li>
+      <li>SQL</li>
+      <li>MongoDB</li>
+      <li>PyTorch</li>
+      <li>TensorFlow</li>
+      <li>HuggingFace</li>
+      <li>LangChain</li>
+      <li>LLMs</li>
+      <li>CUDA</li>
+      <li>High performance computing</li>
+      <li>AWS</li>
+      <li>Hadoop</li>
+      <li>Hbase</li>
+      <li>Apache Spark</li>
+      <li>Apache Kafka</li>
+      <li>Grafana</li>
+      <li>PowerBI</li>
+      <li>Tableau</li>
+      <li>Tibco Spotfire</li>
+      <li>Docker</li>
+      <li>Streamlit</li>
+      <li>FastAPI</li>
+      <li>Git</li>
+
+    </ul>
+  </section>
+
+  <section class="projects">
+    <h2>Projects</h2>
+    <div class="project">
+      <h3>Fine-Tuned an Open Source LLM for SQL Query Generation</h3>
+      <p>• Fine-tuned Llama on a dataset of English-to-SQL query pairs using techniques like LoRA and parameter-efficient fine-tuning, reducing inference errors by 25%.<br>
+        • Developed a preprocessing pipeline to clean, tokenize, and balance the dataset, improving model training efficiency and SQL query accuracy.<br>
+        • Deployed the fine-tuned model into a RESTful API, enabling seamless integration with applications.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/sql-generator-lora-finetuningllama2', '_blank')">View Code</span>
+      </div>
+    </div>
+    <div class="project">
+      <h3>Multimodal Semantic Search Using CLIP Architecture for Image-Text Retrieval</h3>
+      <p>• Implemented a PyTorch-based Contrastive Language-Image Pre-training (CLIP) model for multimodal learning, enabling semantic image search through natural language queries with three different architecture configurations (ResNet-18/34/50 with DistilBERT/BERT/RoBERTa).<br>
+        • Developed a comprehensive training pipeline on the Flickr8k dataset (8,000 images, 40,000 captions) using contrastive learning to learn joint representations of images and text in a shared embedding space, achieving optimal performance with ResNet-34 + BERT configuration.<br>
+        • Engineered advanced preprocessing and evaluation frameworks including data augmentation, temperature-scaled contrastive loss, and visual search capabilities, demonstrating effective image-text alignment for real-time semantic search applications with training loss improvements from 2.36 to 0.335.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/clip-image-text-retrieval', '_blank')">View Code</span>
+      </div>
+    </div>
+    <div class="project">
+      <h3>Implemented & Trained a Transformer Based on "Attention Is All You Need"</h3>
+      <p>• Re-implemented the Transformer architecture from scratch, referencing the seminal "Attention Is All You Need" paper, demonstrating expertise in advanced neural network design.<br>
+        • Trained the model on a custom dataset using PyTorch, optimizing hyperparameters to achieve a BLEU score improvement of 15% over baseline performance.<br>
+        • Analyzed model performance through detailed evaluation metrics, such as attention heatmaps and loss curves, gaining insights into Transformer interpretability and optimization strategies.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/SparseBERT', '_blank')">View Code</span>
+      </div>
+    </div>
+    <div class="project">
+      <h3>Multinational Automatic Vehicle license plate detection using SSDMobilenetV2</h3>
+      <p>• Engineered an AI-based data collection system for automatic license plate recognition, utilizing deep learning and advanced computer vision techniques to achieve a detection accuracy of 91%.<br>
+        • Implemented a robust pipeline for preprocessing, training, and evaluating models using SSD MobileNet V2, enhancing object detection capabilities in real-time applications.<br>
+        • Developed comprehensive evaluation frameworks to measure detection accuracy and system performance across multiple vehicle types and international license plate formats, ensuring scalability for global deployment.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/ANPR_project', '_blank')">View Code</span>
+      </div>
+    </div>
+    <div class="project">
+      <h3>Building a RAG Workflow Using LangChain and Pinecone for Financial Document Search</h3>
+      <p>• Implemented hybrid search architecture combining dense vector embeddings with sparse keyword matching (BM25), achieving 25% improvement in retrieval accuracy across diverse query types and document collections.<br>
+        • Utilized Pinecone vector indexing for efficient similarity search with sub-200ms query latency, enabling real-time document retrieval and seamless integration with LangChain orchestration framework.<br>
+        • Developed comprehensive evaluation frameworks to measure retrieval precision, response relevance, and end-to-end system performance, ensuring production-readiness and optimal parameter tuning for deployment.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/yourusername/your-repo-name', '_blank')">View Code</span>
+        </div>
+    </div>
+  </section>
+  
+  <footer>
+    © 2025 Shruti Pangare
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    const toggleButton = document.querySelector('.toggle-theme');
+    toggleButton.addEventListener('click', () => {
+      document.body.dataset.theme = document.body.dataset.theme === 'light' ? '' : 'light';
+    });
+
+    new Typed('#typed', {
+      strings: ['AI/ML Engineer', 'Transforming Data into Intelligent Solutions', 'Open Source Contributor'],
+      typeSpeed: 50,
+      backSpeed: 30,
+      backDelay: 1500,
+      loop: true
+    });
+
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#38bdf8";
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    const scrollBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+      scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
