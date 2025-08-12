@@ -46,9 +46,159 @@
       z-index: -1;
     }
 
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      padding: 0.75rem 2rem;
+    }
+
+    [data-theme="light"] .navbar {
+      background: rgba(249, 250, 251, 0.95);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .navbar.scrolled {
+      background: rgba(15, 15, 15, 0.98);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .navbar.scrolled {
+      background: rgba(249, 250, 251, 0.98);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .resume-btn {
+      background: var(--gradient);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+    }
+
+    .resume-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .theme-toggle-nav {
+      background: transparent;
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      color: var(--light);
+      padding: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+
+    .theme-toggle-nav:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: var(--light);
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+
     .hero {
       text-align: center;
       padding: 6rem 2rem 3rem;
+      padding-top: 8rem;
     }
 
     .hero h1 {
@@ -118,6 +268,7 @@
       opacity: 0;
       transform: translateY(40px);
       transition: all 0.8s ease;
+      scroll-margin-top: 80px;
     }
 
     section.visible {
@@ -430,6 +581,65 @@
       cursor: pointer;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       z-index: 999;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem 1rem;
+      }
+      
+      .nav-toggle {
+        display: flex;
+      }
+      
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: rgba(15, 15, 15, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 2rem;
+        transition: left 0.3s ease;
+        gap: 1.5rem;
+      }
+      
+      [data-theme="light"] .nav-menu {
+        background: rgba(249, 250, 251, 0.98);
+      }
+      
+      .nav-menu.active {
+        left: 0;
+      }
+      
+      .nav-link {
+        font-size: 1.2rem;
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
+      }
+      
+      .nav-actions {
+        margin-top: 2rem;
+      }
+      
+      /* Hamburger Animation */
+      .nav-toggle.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      
+      .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .nav-toggle.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
     }
   </style>
 </head>
@@ -437,7 +647,49 @@
   <canvas id="bg"></canvas>
   <button class="toggle-theme">Toggle Theme</button>
   <button class="scroll-to-top" id="scrollToTop">↑ Top</button>
-  <section class="hero">
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">SP</a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="#home" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="#experience" class="nav-link">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a href="#projects" class="nav-link">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a href="#technologies" class="nav-link">Tech Stack</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+      
+      <div class="nav-actions">
+        <a href="#" class="resume-btn">Resume</a>
+        <button class="theme-toggle-nav" id="theme-toggle-nav" title="Toggle Theme">
+          🌙
+        </button>
+      </div>
+      
+      <div class="nav-toggle" id="nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
     <h1>Shruti Pangare</h1>
     <div class="typed" id="typed"></div>
     <div class="contact-bar">
@@ -458,20 +710,20 @@
     </div>
   </section>
 
-  <section class="about">
+  <section class="about" id="about">
     <h2>About Me</h2>
     <p>
-      I'm a passionate AI/ML Engineer and Computer Engineering graduate student at NYU, dedicated to building intelligent systems that solve real-world problems. With 2+ years of industry experience and expertise in high-performance computing, I specialize in deep learning optimization, transformer architectures, GPU acceleration with CUDA, and scalable cloud deployments using PyTorch, TensorFlow, and AWS.  Whether it's fine-tuning large models or deploying research-backed applications, I focus on combining practical execution with deep technical knowledge. </p>
+      I'm a passionate AI/ML Engineer and Computer Engineering graduate student at NYU, dedicated to building intelligent systems that solve real-world problems. With 2+ years of industry experience and I bring a unique blend of academic rigor and practical execution to every project. My curiosity drives me to dive deep into cutting-edge research papers, while my communication skills help me translate technical concepts for both engineering teams and business stakeholders. Whether I'm fine-tuning transformer models, optimizing CUDA kernels, or building scalable ML pipelines on AWS, I approach each challenge with enthusiasm and a collaborative mindset that makes me easy to work with. </p>
   </section>
 
-  <section class="now">
+  <section class="now" id="now">
     <h2>Now</h2>
     <p>
       Right now, working as an AI/ML Software Engineering Intern at NYU Langone Health, I'm developing machine learning algorithms for medication titration to assist primary care physicians in optimizing patient treatment protocols. 
     </p>
   </section>
 
-  <section class="experience">
+  <section class="experience" id="experience">
     <h2>Education & Experience</h2>
     
    <div class="experience-timeline">
@@ -564,7 +816,7 @@
   </section>
 
 
-  <section class="technologies">
+  <section class="technologies" id="technologies">
     <h2>Technologies I Use</h2>
     <ul>
       <li>Python</li>
@@ -581,6 +833,7 @@
       <li>LLMs</li>
       <li>CUDA</li>
       <li>High performance computing</li>
+      <li>MLOps</li>
       <li>AWS</li>
       <li>Hadoop</li>
       <li>Hbase</li>
@@ -598,7 +851,7 @@
     </ul>
   </section>
 
-  <section class="projects">
+  <section class="projects" id="projects">
     <h2>Projects</h2>
     <div class="project">
       <h3>Fine-Tuned an Open Source LLM for SQL Query Generation</h3>
@@ -649,6 +902,23 @@
         <span>Live Demo</span>
         <span onclick="window.open('https://github.com/yourusername/your-repo-name', '_blank')">View Code</span>
         </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2>Let's Work Together!</h2>
+    <p>I'm available for AI/ML engineering opportunities. Let's build something amazing together.</p>
+    <div class="contact-bar">
+      <a href="https://github.com/shrutipangare" class="contact-item" target="_blank" rel="noopener" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/shruti-pangare/" class="contact-item" target="_blank" rel="noopener" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="mailto:shruti.pangare@nyu.edu" class="contact-item" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.006c.434 0 .854.178 1.153.49L12 14.184 21.205 4.311a1.63 1.63 0 0 1 1.153-.49h.006c.904 0 1.636.732 1.636 1.636z"/></svg>
+      </a>
     </div>
   </section>
   
@@ -733,6 +1003,83 @@
 
     scrollBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Navigation functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const navbar = document.getElementById('navbar');
+      const navToggle = document.getElementById('nav-toggle');
+      const navMenu = document.getElementById('nav-menu');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const themeToggleNav = document.getElementById('theme-toggle-nav');
+      
+      // Mobile menu toggle
+      navToggle.addEventListener('click', function() {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+      
+      // Close mobile menu when clicking on a link
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('active');
+          navMenu.classList.remove('active');
+        });
+      });
+      
+      // Navbar scroll effect
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+      
+      // Active link on scroll
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '-80px 0px -50% 0px'
+      });
+      
+      sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+      
+      // Theme toggle in navbar
+      themeToggleNav.addEventListener('click', function() {
+        document.body.dataset.theme = document.body.dataset.theme === 'light' ? '' : 'light';
+        themeToggleNav.textContent = document.body.dataset.theme === 'light' ? '☀️' : '🌙';
+      });
+      
+      // Smooth scrolling for navigation links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetSection = document.getElementById(targetId);
+          
+          if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     });
   </script>
 </body>
