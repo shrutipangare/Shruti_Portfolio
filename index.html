@@ -722,7 +722,7 @@
   <section class="now" id="now">
     <h2>Now</h2>
     <p>
-      Right now, working as an AI/ML Software Engineering Intern at NYU Langone Health, I'm developing machine learning algorithms for medication titration to assist primary care physicians in optimizing patient treatment protocols. 
+      Right now, working as an AI/ML Software Engineering Intern at NYU Langone Health, I'm developing machine learning algorithm for medication titration to assist primary care physicians in optimizing patient treatment protocols. 
     </p>
   </section>
 
@@ -760,11 +760,12 @@
             <span class="course-item">Deep Learning</span>
             <span class="course-item">High Performance Machine Learning</span>
             <span class="course-item">Natural Language Processing</span>
+            <span class="course-item">MLOps</span>
             <span class="course-item">Big Data</span>
             <span class="course-item">Data Science & AI for Business: Managerial</span>
             <span class="course-item">Computer Systems Architecture</span>
             <span class="course-item">Real-time Embedded Systems</span>
-            <span class="course-item">ML for Cybersecurity</span>
+            
             <div class="sub-experience">
               <div class="sub-experience-date">April 2025 - Present</div>
               <div class="sub-experience-title">NYU Stern School of Business</div>
@@ -812,7 +813,7 @@
         <div class="sub-experience">
           <div class="sub-experience-date">Jan 2021 - Jun 2021</div>
           <div class="sub-experience-role">📄 Research Assistant for Big Data :    
-            Conducted comprehensive research on Big Data applications in healthcare, collaborating with faculty to develop innovative
+            Conducted comprehensive research on Big Data applications, collaborating with faculty to develop innovative
 solutions and presented findings at three departmental seminars. Developed a novel approach for building recommendation
 systems. This systems employ machine learning techniques like collaborative filtering and predictive analytics to provide
 personalized treatment recommendations to patients and healthcare professionals
@@ -862,43 +863,53 @@ personalized treatment recommendations to patients and healthcare professionals
 
   <section class="projects" id="projects">
     <h2>Projects</h2>
-    <div class="project">
-      <h3>Fine-Tuned an Open Source LLM for SQL Query Generation</h3>
-      <p>• Fine-tuned Llama on a dataset of English-to-SQL query pairs using techniques like LoRA and parameter-efficient fine-tuning, reducing inference errors by 25%.<br>
-        • Developed a preprocessing pipeline to clean, tokenize, and balance the dataset, improving model training efficiency and SQL query accuracy.<br>
-        • Deployed the fine-tuned model into a RESTful API, enabling seamless integration with applications.</p>
+
+     <div class="project">
+      <h3>LoRA-Enhanced RoBERTa for Precise News Categorization  </h3>
+      <p> •  Optimized RoBERTa-base fine-tuning using Low-Rank Adaptation (LoRA), reducing model parameters by 99.4% from 125M to 741K
+while achieving 95.3% accuracy on AG News classification. <br>
+• Developed advanced training pipeline with mixed-precision (FP16), gradient accumulation, and MLM-based augmentation, delivering
+optimized per-class F1 scores ranging from 94.6% to 96.1% across different news categories. <br>
+</p>
       <div class="project-buttons">
         <span>Live Demo</span>
-        <span onclick="window.open('https://github.com/shrutipangare/sql-generator-lora-finetuningllama2', '_blank')">View Code</span>
+        <span onclick="window.open('https://github.com/shrutipangare/ECE-GY-7123-NewsClassification_LoRA_Finetuning', '_blank')">View Code</span>
       </div>
     </div>
+
+
     <div class="project">
-      <h3>Multimodal Semantic Search Using CLIP Architecture for Image-Text Retrieval</h3>
-      <p>• Built AI system enabling users to search 8,000+ images using natural language queries, achieving 87% training loss reduction through systematic model optimization
-         • Evaluated 3 model architectures (ResNet-18/34/50 + DistilBERT/BERT/RoBERTa), selecting optimal configuration that processes 32 images per batch in real-time
-           • Developed end-to-end machine learning pipeline handling 40,000 image-text pairs, demonstrating scalable multimodal understanding for production deployment
-     <div class="project-buttons">
-        <span>Live Demo</span>
-        <span onclick="window.open('https://github.com/shrutipangare/clip-image-text-retrieval', '_blank')">View Code</span>
-      </div>
-    </div>
-    <div class="project">
-      <h3>Implemented & Trained a Transformer Based on "Attention Is All You Need"</h3>
-      <p>• Re-implemented the Transformer architecture from scratch, referencing the seminal "Attention Is All You Need" paper, demonstrating expertise in advanced neural network design.<br>
-        • Trained the model on a custom dataset using PyTorch, optimizing hyperparameters to achieve a BLEU score improvement of 15% over baseline performance.<br>
-        • Analyzed model performance through detailed evaluation metrics, such as attention heatmaps and loss curves, gaining insights into Transformer interpretability and optimization strategies.</p>
+      <h3>Movie Dialog Conversational AI </h3>
+      <p> • Pioneered an advanced seq2seq chatbot, ran WB Bayesian sweeps (20 configs) to reduce training loss.<br>
+• Profiled with PyTorch Profiler; identified GRU 60% of training time; optimized and exported via TorchScript for faster inference.<br>
+• Architected a scalable ML pipeline, preprocessing the Cornell Movie Dialogs Corpus (220,579 conversational exchanges) and
+implementing advanced techniques to enhance model generalization and training stability.<br>
+</p>
       <div class="project-buttons">
         <span>Live Demo</span>
-        <span onclick="window.open('https://github.com/shrutipangare/SparseBERT', '_blank')">View Code</span>
+        <span onclick="window.open('https://github.com/shrutipangare/ChatbotSeq-to-Seq', '_blank')">View Code</span>
       </div>
     </div>
+ 
+   
     <div class="project">
+      <h3>LeanResNets</h3>
+      <p>•Comprehensive study of lightweight ResNet variants, all under 5M parameters, designed for resource-constrained environments.<br>
+Ranked among the top 25% of teams in Kaggle competition, single-handedly surpassing the benchmark.<br>
+Extensive ablation studies exploring the impact of various network components while maintaining high accuracy and efficiency.<br>
+Achieved up to 95.75% test accuracy with training techniques including CutMix, MixUp, AutoAugment, and multiple optimizer configurations.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/lean-resnet-classifier', '_blank')">View Code</span>
+      </div>
+    </div>
+      <div class="project">
       <h3>Wafer Fault Detection</h3>
       <p>• Designed and implemented a machine learning pipeline to predict wafer replacement needs from sensor data, achieving an
 accuracy of 94% through rigorous data validation, preprocessing, and optimal model selection using ranking algorithms such as
-Random Forest with cross-validation and model evaluation
+Random Forest with cross-validation and model evaluation.<br>
   • Automated data ingestion and validation on AWS Elastic Beanstalk, optimizing scalability. Integrated the final model with Flask
-framework
+framework</p>
       <div class="project-buttons">
         <span>Live Demo</span>
         <span onclick="window.open('https://github.com/shrutipangare/waferfault-detection/tree/main/WaferFaultDetection_new', '_blank')">View Code</span>
@@ -914,7 +925,39 @@ framework
         <span onclick="window.open('https://github.com/shrutipangare/ANPR_project', '_blank')">View Code</span>
       </div>
     </div>
+  
     <div class="project">
+      <h3>Job Market Analysis Platform</h3>
+      <p>• Architected a comprehensive machine learning ecosystem leveraging distributed computing and advanced NLP to
+transform unstructured job market data into strategic talent intelligence, processing 2.9M+ job records across multiple domains.<br>
+• Developed a multi-modal predictive framework integrating advanced classification, clustering, and recommendation</p>
+     <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/Job_MarketAnalysis', '_blank')">View Code</span>
+        </div>
+    </div>
+ <div class="project">
+      <h3>Implemented & Trained a Transformer Based on "Attention Is All You Need"</h3>
+      <p>• Re-implemented the Transformer architecture from scratch, referencing the seminal "Attention Is All You Need" paper, demonstrating expertise in advanced neural network design.<br>
+        • Trained the model on a custom dataset using PyTorch, optimizing hyperparameters to achieve a BLEU score improvement of 15% over baseline performance.<br>
+        • Analyzed model performance through detailed evaluation metrics, such as attention heatmaps and loss curves, gaining insights into Transformer interpretability and optimization strategies.</p>
+      <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/ChatbotSeq-to-Seq', '_blank')">View Code</span>
+      </div>
+    </div>
+       <div class="project">
+      <h3>Multimodal Semantic Search Using CLIP Architecture for Image-Text Retrieval</h3>
+      <p>• Built AI system enabling users to search 8,000+ images using natural language queries, achieving 87% training loss reduction through systematic model optimization.<br>
+         • Evaluated 3 model architectures (ResNet-18/34/50 + DistilBERT/BERT/RoBERTa), selecting optimal configuration that processes 32 images per batch in real-time.<br>
+           • Developed end-to-end machine learning pipeline handling 40,000 image-text pairs, demonstrating scalable multimodal understanding for production deployment.<br>
+     <div class="project-buttons">
+        <span>Live Demo</span>
+        <span onclick="window.open('https://github.com/shrutipangare/clip-image-text-retrieval', '_blank')">View Code</span>
+      </div>
+    </div>
+
+      <div class="project">
       <h3>Building a RAG Workflow Using LangChain and Pinecone for Financial Document Search</h3>
       <p>• Implemented hybrid search architecture combining dense vector embeddings with sparse keyword matching (BM25), achieving 25% improvement in retrieval accuracy across diverse query types and document collections.<br>
         • Utilized Pinecone vector indexing for efficient similarity search with sub-200ms query latency, enabling real-time document retrieval and seamless integration with LangChain orchestration framework.<br>
@@ -922,17 +965,6 @@ framework
       <div class="project-buttons">
         <span>Live Demo</span>
         <span onclick="window.open('https://github.com/yourusername/your-repo-name', '_blank')">View Code</span>
-        </div>
-    </div>
-    <div class="project">
-      <h3>Job Market Analysis Platform</h3>
-      <p>• Developed a scalable ML platform processing 2.9M+ job records (7.9GB) with PySpark MLlib for predictive modeling of
-employment trends, showcasing expertise in distributed systems and big data analytics
-• Built NLP pipeline to extract skill patterns and an interactive forecasting dashboard, enabling data-driven career insights and
-recommendations
-     <div class="project-buttons">
-        <span>Live Demo</span>
-        <span onclick="window.open('https://github.com/shrutipangare/Job_MarketAnalysis', '_blank')">View Code</span>
         </div>
     </div>
 
