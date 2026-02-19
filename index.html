@@ -13,7 +13,7 @@
     :root {
       --bg:              #f0f2f8;
       --card-bg:         #ffffff;
-      --card-border:     rgba(79,70,229,0.14);
+      --card-border:     rgba(79,70,229,0.13);
       --card-shadow:     0 2px 16px rgba(79,70,229,0.07);
       --accent:          #4f46e5;
       --accent2:         #7c3aed;
@@ -23,11 +23,12 @@
       --muted2:          #9ca3af;
       --navbar-bg:       rgba(240,242,248,0.96);
       --divider:         rgba(79,70,229,0.12);
-      --tag-border:      #4f46e5;
-      --tag-color:       #4f46e5;
-      --tag-fill-bg:     rgba(79,70,229,0.09);
-      --tag-fill-border: rgba(79,70,229,0.22);
+      --tag-border:      rgba(79,70,229,0.35);
+      --tag-color:       #374151;
+      --tag-fill-bg:     rgba(79,70,229,0.08);
+      --tag-fill-border: rgba(79,70,229,0.2);
       --sub-bg:          rgba(79,70,229,0.05);
+      --skill-card-bg:   #f8f9fc;
     }
 
     [data-theme="dark"] {
@@ -40,11 +41,12 @@
       --muted2:          #6b7280;
       --navbar-bg:       rgba(13,13,20,0.97);
       --divider:         rgba(99,102,241,0.18);
-      --tag-border:      #818cf8;
-      --tag-color:       #818cf8;
+      --tag-border:      rgba(129,140,248,0.4);
+      --tag-color:       #d1d5db;
       --tag-fill-bg:     rgba(99,102,241,0.12);
       --tag-fill-border: rgba(99,102,241,0.28);
       --sub-bg:          rgba(99,102,241,0.07);
+      --skill-card-bg:   rgba(20,21,40,0.8);
     }
 
     /* ═══════════════════════════════════════
@@ -64,7 +66,7 @@
     canvas#bg {
       position:fixed; inset:0;
       width:100%; height:100%;
-      z-index:-1; opacity:0.28;
+      z-index:-1; opacity:0.22;
       pointer-events:none;
     }
 
@@ -78,7 +80,7 @@
       border-bottom:1px solid var(--divider);
       z-index:1000;
       padding:0.8rem 2rem;
-      transition:box-shadow 0.3s, background 0.35s;
+      transition:box-shadow 0.3s,background 0.35s;
     }
     .navbar.scrolled { box-shadow:0 4px 24px rgba(79,70,229,0.1); }
 
@@ -152,7 +154,7 @@
     ═══════════════════════════════════════ */
     section {
       padding:4.5rem 2rem;
-      max-width:920px; margin:0 auto;
+      max-width:1000px; margin:0 auto;
       opacity:0; transform:translateY(32px);
       transition:opacity 0.7s ease,transform 0.7s ease;
       scroll-margin-top:78px;
@@ -170,6 +172,8 @@
       background:var(--gradient);
       border-radius:2px; margin-top:7px;
     }
+
+
 
     /* ═══════════════════════════════════════
        HERO
@@ -217,30 +221,34 @@
     }
 
     /* ═══════════════════════════════════════
-       TIMELINE
+       EXPERIENCE TIMELINE
+       (matching friend's layout exactly)
     ═══════════════════════════════════════ */
     .timeline {
       position:relative;
-      padding-left:44px;
+      padding-left:52px;
       margin-top:0.5rem;
     }
+
+    /* Vertical line */
     .timeline::before {
       content:''; position:absolute;
-      left:8px; top:12px; bottom:12px;
-      width:2.5px;
-      background:linear-gradient(180deg,var(--accent) 0%,rgba(79,70,229,0.1) 100%);
+      left:10px; top:16px; bottom:16px;
+      width:3px;
+      background:linear-gradient(180deg, var(--accent) 0%, rgba(79,70,229,0.1) 100%);
       border-radius:2px;
     }
 
+    /* Card */
     .exp-card {
       position:relative;
       background:var(--card-bg);
       border:1px solid var(--card-border);
       border-radius:14px;
-      padding:1.5rem 1.65rem;
+      padding:1.6rem 1.75rem;
       margin-bottom:1.75rem;
       box-shadow:var(--card-shadow);
-      transition:transform 0.28s ease,box-shadow 0.28s ease,border-color 0.28s ease;
+      transition:transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
     }
     .exp-card:last-child { margin-bottom:0; }
     .exp-card:hover {
@@ -249,74 +257,114 @@
       border-color:rgba(79,70,229,0.3);
     }
 
-    /* Timeline dot */
+    /* Blue dot on timeline */
     .exp-card::before {
       content:''; position:absolute;
-      left:-38px; top:1.6rem;
-      width:13px; height:13px;
+      left:-44px; top:1.75rem;
+      width:14px; height:14px;
       background:var(--accent); border-radius:50%;
       border:3px solid var(--bg);
       box-shadow:0 0 0 2px var(--accent);
       transition:border-color 0.35s;
     }
 
+    /* Row: job title (bold, dark) LEFT | date (gray) RIGHT */
     .exp-head {
-      display:flex; justify-content:space-between;
-      align-items:flex-start; gap:1rem;
-      flex-wrap:wrap; margin-bottom:0.2rem;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem; flex-wrap:wrap;
+      margin-bottom:0.18rem;
     }
-    .exp-title { font-size:1.08rem; font-weight:700; color:var(--text); }
+    .exp-job-title {
+      font-size:1.1rem; font-weight:700;
+      color:var(--text); line-height:1.3;
+    }
     .exp-date {
-      font-size:0.8rem; font-weight:500;
-      color:var(--muted2); white-space:nowrap; padding-top:2px;
+      font-size:0.82rem; font-weight:500;
+      color:var(--muted2); white-space:nowrap;
+      flex-shrink:0; padding-top:3px;
     }
-    .exp-role { font-size:0.93rem; font-weight:600; color:var(--accent); margin-bottom:0.22rem; }
-    .exp-location { font-size:0.82rem; font-style:italic; color:var(--muted2); margin-bottom:0.85rem; }
+
+    /* Company name in accent blue, below title */
+    .exp-company {
+      font-size:0.95rem; font-weight:600;
+      color:var(--accent); margin-bottom:0.2rem;
+    }
+
+    /* Location italic gray */
+    .exp-location {
+      font-size:0.83rem; font-style:italic;
+      color:var(--muted2); margin-bottom:0.9rem;
+    }
+
+    /* GPA badge */
     .exp-gpa {
-      display:inline-block; font-size:0.8rem; font-weight:600;
+      display:inline-block;
+      font-size:0.8rem; font-weight:600;
       color:var(--accent);
       background:var(--tag-fill-bg);
       border:1px solid var(--tag-fill-border);
-      padding:0.2rem 0.75rem; border-radius:20px; margin-bottom:0.85rem;
+      padding:0.18rem 0.75rem; border-radius:20px;
+      margin-bottom:0.85rem;
     }
 
-    .exp-bullets { list-style:none; margin:0.65rem 0 0; }
+    /* Award badge (like AMD Spotlight) */
+    .exp-award {
+      display:inline-flex; align-items:center; gap:0.35rem;
+      font-size:0.82rem; font-weight:600;
+      color:var(--accent);
+      background:var(--tag-fill-bg);
+      border:1px solid var(--tag-fill-border);
+      padding:0.22rem 0.85rem; border-radius:20px;
+      margin-bottom:0.9rem;
+    }
+
+    /* Bullet list */
+    .exp-bullets { list-style:none; margin:0 0 0.25rem; }
     .exp-bullets li {
-      display:flex; gap:0.5rem;
+      display:flex; gap:0.55rem;
       font-size:0.91rem; color:var(--muted);
-      line-height:1.65; margin-bottom:0.45rem;
+      line-height:1.65; margin-bottom:0.5rem;
     }
     .exp-bullets li::before {
       content:'▶'; color:var(--accent);
       font-size:0.55rem; margin-top:6px; flex-shrink:0;
     }
 
-    .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:1rem; }
+    /* Outlined pill tags (friend's style) */
+    .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:1rem; }
     .tag {
       border:1px solid var(--tag-border);
       color:var(--tag-color);
       background:transparent;
-      padding:3px 11px; border-radius:20px;
-      font-size:0.78rem; font-weight:500;
-      transition:background 0.2s,color 0.2s; cursor:default;
+      padding:4px 13px; border-radius:20px;
+      font-size:0.8rem; font-weight:500;
+      transition:background 0.2s,color 0.2s,border-color 0.2s; cursor:default;
     }
     .tag:hover { background:var(--accent); color:#fff; border-color:var(--accent); }
 
+    /* Filled tags for coursework */
     .tag-fill {
       background:var(--tag-fill-bg);
       border:1px solid var(--tag-fill-border);
       color:var(--accent);
-      padding:3px 11px; border-radius:20px;
-      font-size:0.78rem; font-weight:500;
+      padding:4px 13px; border-radius:20px;
+      font-size:0.8rem; font-weight:500;
     }
 
-    .coursework-block { margin-top:1rem; padding-top:1rem; border-top:1px solid var(--divider); }
+    /* Coursework block inside NYU card */
+    .coursework-block {
+      margin-top:1rem; padding-top:1rem;
+      border-top:1px solid var(--divider);
+    }
     .coursework-label {
       font-size:0.78rem; font-weight:700;
       text-transform:uppercase; letter-spacing:0.6px;
-      color:var(--muted2); margin-bottom:0.6rem;
+      color:var(--muted2); margin-bottom:0.65rem;
     }
 
+    /* Sub-experience (Teaching Fellow / RA) */
     .sub-exp {
       margin-top:0.9rem; padding:0.85rem 1rem;
       background:var(--sub-bg);
@@ -324,26 +372,104 @@
       border-radius:8px;
     }
     .sub-exp-date { font-size:0.78rem; font-weight:600; color:var(--accent); margin-bottom:2px; }
-    .sub-exp-org { font-size:0.87rem; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .sub-exp-org  { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:3px; }
     .sub-exp-role { font-size:0.84rem; color:var(--muted); line-height:1.55; }
 
     /* ═══════════════════════════════════════
-       TECHNOLOGIES
+       SKILLS — exactly matching friend's UI
     ═══════════════════════════════════════ */
-    .tech-grid { display:flex; flex-wrap:wrap; gap:0.65rem; margin-top:0.5rem; list-style:none; }
-    .tech-grid li {
-      background:var(--card-bg);
-      border:1px solid var(--card-border);
-      color:var(--text);
-      padding:0.42rem 1rem; border-radius:20px;
-      font-size:0.85rem; font-weight:500;
-      box-shadow:var(--card-shadow); cursor:default;
-      transition:background 0.2s,color 0.2s,transform 0.2s,border-color 0.2s,box-shadow 0.2s;
+    .skills-section { max-width:1100px; }
+
+    /* Centered section heading */
+    .skills-heading {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
     }
-    .tech-grid li:hover {
-      background:var(--accent); color:#fff;
-      border-color:var(--accent); transform:translateY(-2px);
-      box-shadow:0 4px 14px rgba(79,70,229,0.28);
+    .skills-heading-bar {
+      display: block;
+      width: 48px; height: 3px;
+      background: var(--gradient);
+      border-radius: 2px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Each category card — light gray bg, no strong shadow */
+    .skill-card {
+      background: #f3f4f8;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 1.6rem 1.7rem;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+    [data-theme="dark"] .skill-card {
+      background: rgba(22,23,42,0.85);
+      border-color: rgba(99,102,241,0.15);
+    }
+    .skill-card:hover {
+      box-shadow: 0 6px 24px rgba(79,70,229,0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Header: colored icon + bold title */
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.2rem;
+    }
+    .skill-card-icon {
+      width: 28px; height: 28px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .skill-card-icon svg {
+      width: 100%; height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .skill-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Pills — white bg, thin gray border, dark text, no accent hover fill */
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-pill {
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      color: #374151;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 400;
+      cursor: default;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    [data-theme="dark"] .skill-pill {
+      background: rgba(30,31,55,0.9);
+      border-color: rgba(99,102,241,0.22);
+      color: #d1d5db;
+    }
+    .skill-pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* ═══════════════════════════════════════
@@ -355,7 +481,7 @@
       background:var(--card-bg);
       border:1px solid var(--card-border);
       border-radius:14px;
-      padding:1.5rem 1.65rem;
+      padding:1.5rem 1.75rem;
       box-shadow:var(--card-shadow);
       transition:transform 0.28s ease,box-shadow 0.28s ease,border-color 0.28s ease;
     }
@@ -365,7 +491,7 @@
       border-color:rgba(79,70,229,0.3);
     }
     .project-card h3 { font-size:0.98rem; font-weight:700; color:var(--accent); margin-bottom:0.6rem; }
-    .project-card p { font-size:0.9rem; color:var(--muted); line-height:1.7; }
+    .project-card p  { font-size:0.9rem; color:var(--muted); line-height:1.7; }
 
     .project-btns { display:flex; gap:0.65rem; flex-wrap:wrap; margin-top:1rem; }
     .project-btns span {
@@ -407,6 +533,9 @@
     /* ═══════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════ */
+    @media (max-width:900px) {
+      .skills-grid { grid-template-columns:repeat(2,1fr); }
+    }
     @media (max-width:768px) {
       .nav-toggle { display:flex; }
       .nav-menu {
@@ -423,9 +552,10 @@
       .nav-actions { margin-top:1rem; }
       .hero h1 { font-size:2.1rem; }
       .hero-typed { font-size:1.1rem; }
-      .timeline { padding-left:32px; }
-      .exp-card::before { left:-28px; width:11px; height:11px; }
+      .timeline { padding-left:36px; }
+      .exp-card::before { left:-30px; width:12px; height:12px; }
       .exp-head { flex-direction:column; gap:0.15rem; }
+      .skills-grid { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -500,22 +630,23 @@
       <!-- NYU Langone -->
       <div class="exp-card">
         <div class="exp-head">
-          <span class="exp-title">NYU Langone Health – HiBRID Lab</span>
+          <span class="exp-job-title">SWE (AI/ML) – Digital Health Intern</span>
           <span class="exp-date">May 2025 – Aug 2025</span>
         </div>
-        <div class="exp-role">SWE (AI/ML) – Digital Health Intern</div>
+        <div class="exp-company">NYU Langone Health – HiBRID Lab</div>
         <div class="exp-location">New York, NY</div>
       </div>
 
       <!-- NYU MS -->
       <div class="exp-card">
         <div class="exp-head">
-          <span class="exp-title">New York University</span>
+          <span class="exp-job-title">M.S. Computer Engineering</span>
           <span class="exp-date">Aug 2024 – May 2026</span>
         </div>
-        <div class="exp-role">M.S. Computer Engineering</div>
+        <div class="exp-company">New York University</div>
         <div class="exp-location">New York, NY</div>
         <span class="exp-gpa">GPA: 3.8 / 4.0</span>
+
         <div class="coursework-block">
           <div class="coursework-label">Coursework</div>
           <div class="tags">
@@ -530,6 +661,7 @@
             <span class="tag-fill">Real-time Embedded Systems</span>
           </div>
         </div>
+
         <div class="sub-exp">
           <div class="sub-exp-date">April 2025 – Present</div>
           <div class="sub-exp-org">NYU Stern School of Business</div>
@@ -540,10 +672,10 @@
       <!-- Capgemini -->
       <div class="exp-card">
         <div class="exp-head">
-          <span class="exp-title">Capgemini Technology Services</span>
+          <span class="exp-job-title">Analyst</span>
           <span class="exp-date">Sept 2022 – Aug 2024</span>
         </div>
-        <div class="exp-role">Analyst</div>
+        <div class="exp-company">Capgemini Technology Services</div>
         <div class="exp-location">India</div>
         <div class="tags">
           <span class="tag">Python</span>
@@ -559,10 +691,10 @@
       <!-- iNeuron -->
       <div class="exp-card">
         <div class="exp-head">
-          <span class="exp-title">iNeuron.Ai</span>
+          <span class="exp-job-title">Data Science Intern</span>
           <span class="exp-date">Jun 2021 – Jan 2022</span>
         </div>
-        <div class="exp-role">Data Science Intern</div>
+        <div class="exp-company">iNeuron.Ai</div>
         <div class="tags">
           <span class="tag">Python</span>
           <span class="tag">Machine Learning</span>
@@ -572,12 +704,13 @@
       <!-- SPPU -->
       <div class="exp-card">
         <div class="exp-head">
-          <span class="exp-title">Savitribai Phule Pune University</span>
+          <span class="exp-job-title">B.E. Computer Engineering</span>
           <span class="exp-date">Aug 2018 – May 2022</span>
         </div>
-        <div class="exp-role">B.E. Computer Engineering</div>
+        <div class="exp-company">Savitribai Phule Pune University</div>
         <div class="exp-location">Pune, India</div>
         <span class="exp-gpa">GPA: 9.09 / 10</span>
+
         <div class="sub-exp">
           <div class="sub-exp-date">Jan 2021 – Jun 2021</div>
           <div class="sub-exp-org">Research Assistant – Big Data</div>
@@ -590,18 +723,135 @@
     </div>
   </section>
 
-  <!-- ══════════ TECHNOLOGIES ══════════ -->
-  <section id="technologies">
-    <h2 class="section-title">Technologies I Use</h2>
-    <ul class="tech-grid">
-      <li>Python</li><li>Pandas</li><li>NumPy</li><li>Matplotlib</li>
-      <li>Scikit-learn</li><li>C++</li><li>SQL</li><li>MongoDB</li>
-      <li>PyTorch</li><li>TensorFlow</li><li>HuggingFace</li><li>LangChain</li>
-      <li>LLMs</li><li>CUDA</li><li>High Performance Computing</li><li>MLOps</li>
-      <li>AWS</li><li>Hadoop</li><li>HBase</li><li>Apache Spark</li>
-      <li>Apache Kafka</li><li>Grafana</li><li>PowerBI</li><li>Tableau</li>
-      <li>Tibco Spotfire</li><li>Docker</li><li>Streamlit</li><li>FastAPI</li><li>Git</li>
-    </ul>
+  <!-- ══════════ TECHNOLOGIES / SKILLS ══════════ -->
+  <section id="technologies" class="skills-section">
+    <h2 class="skills-heading">Technical Expertise</h2>
+    <span class="skills-heading-bar"></span>
+
+    <div class="skills-grid">
+
+      <!-- Machine Learning & AI -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- brain / neural net icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/></svg>
+          </span>
+          <span class="skill-card-title">Machine Learning &amp; AI</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">Machine Learning</span>
+          <span class="skill-pill">Deep Learning</span>
+          <span class="skill-pill">LLMs</span>
+          <span class="skill-pill">NLP</span>
+          <span class="skill-pill">Computer Vision</span>
+          <span class="skill-pill">Transformer Models</span>
+          <span class="skill-pill">LoRA / Fine-tuning</span>
+          <span class="skill-pill">RAG</span>
+          <span class="skill-pill">MLOps</span>
+        </div>
+      </div>
+
+      <!-- Frameworks & Libraries -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- code brackets icon -->
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </span>
+          <span class="skill-card-title">Frameworks &amp; Libraries</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">PyTorch</span>
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">HuggingFace</span>
+          <span class="skill-pill">LangChain</span>
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">Matplotlib</span>
+        </div>
+      </div>
+
+      <!-- Programming & Tools -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- terminal icon -->
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><polyline points="8 10 12 14 8 18"/><line x1="16" y1="18" x2="12" y2="18"/></svg>
+          </span>
+          <span class="skill-card-title">Programming &amp; Tools</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">CUDA</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">FastAPI</span>
+          <span class="skill-pill">Streamlit</span>
+        </div>
+      </div>
+
+      <!-- High Performance Computing -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- cpu / chip icon -->
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          </span>
+          <span class="skill-card-title">High Performance Computing</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">CUDA</span>
+          <span class="skill-pill">High Performance ML</span>
+          <span class="skill-pill">GPU Optimization</span>
+          <span class="skill-pill">Apache Spark</span>
+          <span class="skill-pill">Apache Kafka</span>
+          <span class="skill-pill">Hadoop</span>
+          <span class="skill-pill">HBase</span>
+        </div>
+      </div>
+
+      <!-- Cloud & Infrastructure -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- cloud icon -->
+            <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </span>
+          <span class="skill-card-title">Cloud &amp; Infrastructure</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">AWS</span>
+          <span class="skill-pill">Snowflake</span>
+          <span class="skill-pill">MongoDB</span>
+          <span class="skill-pill">Docker</span>
+          <span class="skill-pill">MLOps Pipelines</span>
+        </div>
+      </div>
+
+      <!-- Data & Analytics -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <span class="skill-card-icon">
+            <!-- bar chart icon -->
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          </span>
+          <span class="skill-card-title">Data &amp; Analytics</span>
+        </div>
+        <div class="skill-pills">
+          <span class="skill-pill">PowerBI</span>
+          <span class="skill-pill">Tableau</span>
+          <span class="skill-pill">Grafana</span>
+          <span class="skill-pill">Tibco Spotfire</span>
+          <span class="skill-pill">Statistical Modelling</span>
+          <span class="skill-pill">Causal Inference</span>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <!-- ══════════ PROJECTS ══════════ -->
@@ -772,17 +1022,13 @@
 
     /* Section reveal */
     const sections = document.querySelectorAll('section');
-    new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.07 }).observe
-    // observe each section
     sections.forEach(s => {
       new IntersectionObserver(entries => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.07 }).observe(s);
     });
 
-    /* Navbar shadow + scroll btn */
+    /* Navbar + scroll btn */
     const navbar = document.getElementById('navbar');
     const scrollBtn = document.getElementById('scrollTopBtn');
     window.addEventListener('scroll', () => {
@@ -813,16 +1059,7 @@
       themeBtn.textContent = dark ? '🌙' : '☀️';
     });
 
-    /* Active nav on scroll */
-    new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          document.querySelectorAll('.nav-link').forEach(l => {
-            l.classList.toggle('active', l.getAttribute('href') === `#${e.target.id}`);
-          });
-        }
-      });
-    }, { threshold: 0.3, rootMargin: '-78px 0px -50% 0px' })
+    /* Active nav + smooth scroll */
     sections.forEach(s => {
       new IntersectionObserver(entries => {
         entries.forEach(e => {
@@ -835,7 +1072,6 @@
       }, { threshold: 0.3, rootMargin: '-78px 0px -50% 0px' }).observe(s);
     });
 
-    /* Smooth scroll */
     document.querySelectorAll('.nav-link').forEach(l => {
       l.addEventListener('click', e => {
         e.preventDefault();
